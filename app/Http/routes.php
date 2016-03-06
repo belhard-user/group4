@@ -1,31 +1,47 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
+    $names = [
+        'Neo',
+        'Morpheus',
+        'Trinity',
+        'Tank',
+        'Switch',
+        'Dozer'
+    ];
+
+    return $names;
 });
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['prefix' => 'api'], function(){
+
+    Route::group(['prefix' => 'test'], function(){
+        Route::get('balance', function(){
+            return "User Balance";
+        })->middleware('web');
+
+        Route::get('profile', function(){
+            return "User profile";
+        });
+    });
+});
+
+Route::get('foo', ['as' => 'route.name', 'uses' => function(){
+    return route('test', [
+        'number' => 33,
+        'n' => '@neo',
+        'foo' => 'bar'
+    ]);
+}]);
+
+Route::get('hello-world/{number?}/{n}', ['as' => 'test', 'uses'=>function($number='Guest', $n=''){
+    return "Hello $number";
+}])->where([
+    'number' => '\d{1,2}',
+    'n' => '@\w+'
+]);
+
+/*Route::group(['middleware' => ['web']], function () {
     //
-});
+});*/
