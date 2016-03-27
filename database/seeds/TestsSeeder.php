@@ -16,9 +16,8 @@ class TestsSeeder extends Seeder
         $records = [];
         $faker = Faker\Factory::create();
 
-        for($i = 0; $i < 100; $i++){
+        for($i = 0; $i < 10000; $i++){
             $records[] = [
-                'cnt' => bcrypt($i),
                 'rip_date' => $faker->dateTimeBetween(),
                 'updated_at' => $faker->dateTimeBetween(),
                 'created_at' => $faker->dateTimeBetween(),

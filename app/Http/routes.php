@@ -2,6 +2,9 @@
 Route::get('db', ['uses' => 'DbController@index']);
 Route::get('insert', ['uses' => 'DbController@insert']);
 Route::get('update', ['uses' => 'DbController@update']);
+Route::get('model/{test}', 'ModelController@index');
+Route::get('all', 'ModelController@all');
+Route::get('api', 'ModelController@api');
 
 Route::group(['prefix' => 'form', 'middleware' => ['web']], function()
 {
