@@ -1,45 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Laravel</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
+        <title>@yield('title', 'Главная страница моего сайта')</title>
+        <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+        <link href="/css/style.css" type="text/css" rel="stylesheet">
+        @yield('css.header')
     </head>
     <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
-            </div>
+    <div class="container">
+        <div class="header clearfix">
+            @include('partials.nav')
         </div>
+
+        <div class="row marketing">
+            @yield('content')
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2015 Company, Inc.</p>
+        </footer>
+
+    </div>
+    {{-- Можно подключить и так без функции asset --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    @yield('js.footer')
     </body>
 </html>
