@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use App\Http\Requests\ArticleRequest;
+use App\Classes\AddPhotoToArticle;
+use App\Classes\AddPhotoToScreen;
+use App\Photo;
 use Illuminate\Http\Request;
+use App\Http\Requests\ArticleRequest;
 
 use App\Http\Requests;
 
@@ -46,16 +49,5 @@ class ArticleController extends Controller
         $article->update($request->all());
 
         return redirect()->back();
-    }
-
-    public function addPhoto(Article $article, Request $request)
-    {
-        $file = $request->file('file');
-        $name = time() . '_' .$file->getClientOriginalName();
-
-        $path = 'article/';
-
-        $file->move($path, $name);
-        return 'done';
     }
 }

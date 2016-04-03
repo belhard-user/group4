@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use App\Http\Requests\TestsRequest;
+use App\Photo;
 use Illuminate\Http\Request;
 use DB;
 
@@ -77,5 +79,10 @@ class DbController extends Controller
         DB::table('tests')->insert($request->except(['_token']));
 
         return redirect()->back();
+    }
+
+    public function image()
+    {
+        return view('db.imag');
     }
 }

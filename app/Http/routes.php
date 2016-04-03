@@ -2,11 +2,11 @@
 
 Route::get('/', ['uses' => 'IndexController@home', 'as' => 'homepage']);
 
-Route::group(['prefix' => 'article', 'middleware' => ['web']], function(){
+Route::group(['prefix' => 'articles', 'middleware' => ['web']], function(){
 
     Route::get('/', ['uses' => 'ArticleController@index']);
 
-    Route::post('{article}/photo', ['uses' => 'ArticleController@addPhoto', 'as' => 'photo']);
+    Route::post('{article}/photo', ['uses' => 'PhotoController@store', 'as' => 'photo']);
 
     Route::get('create', ['uses' => 'ArticleController@create']);
     Route::post('create', ['uses' => 'ArticleController@store']);
@@ -18,6 +18,7 @@ Route::group(['prefix' => 'article', 'middleware' => ['web']], function(){
 
 
 Route::get('db', ['uses' => 'DbController@index']);
+Route::get('image', ['uses' => 'DbController@image']);
 Route::get('insert', ['uses' => 'DbController@insert']);
 Route::get('update', ['uses' => 'DbController@update']);
 Route::get('model/{test}', 'ModelController@index');
