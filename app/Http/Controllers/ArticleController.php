@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Classes\AddPhotoToArticle;
 use App\Classes\AddPhotoToScreen;
-use App\Photo;
+use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\ArticleRequest;
 
@@ -13,6 +13,15 @@ use App\Http\Requests;
 
 class ArticleController extends Controller
 {
+
+    /**
+     * ArticleController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['store', 'create']]);
+    }
+
     public function index()
     {
         $articles = Article::paginate(15);
@@ -21,22 +30,27 @@ class ArticleController extends Controller
     }
     public function create()
     {
-        return view('article.create');
+        $all_tags  = Tag::lists('name', 'id');
+
+        return view('article.create', compact('all_tags'));
     }
 
     public function store(ArticleRequest $request)
     {
-        $req = $request->all();
-        $req['user_id'] = 1;
+        $article = \Auth::user()->article()->save(new Article($request->all()));
 
-        $article  = Article::create($req);
+        $article->tags()->attach($request->input('tag_list'));
+
+        flash('Ok', 'Запись ' . $article->title . ' успешно добавлена...');
 
         return redirect()->route('article.show', ['article' => $article->id]);
     }
 
     public function edit(Article $article)
     {
-        return view('article.edit', compact('article'));
+        $all_tags  = Tag::lists('name', 'id');
+
+        return view('article.edit', compact('article', 'all_tags'));
     }
 
     public function show(Article $article)
@@ -47,6 +61,9 @@ class ArticleController extends Controller
     public function update(Article $article, ArticleRequest $request)
     {
         $article->update($request->all());
+        $article->tags()->sync($request->input('tag_list'));
+
+        flash('Ok', 'Запись ' . $article->title . ' успешно обнавлена...');
 
         return redirect()->back();
     }

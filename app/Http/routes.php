@@ -1,5 +1,15 @@
 <?php
 
+
+Route::group(['namespace' => 'Admin', 'middleware' => ['admin']], function(){
+    Route::get('admin-panel', 'IndexController@index');
+});
+
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+});
+
 Route::get('/', ['uses' => 'IndexController@home', 'as' => 'homepage']);
 
 Route::group(['prefix' => 'articles', 'middleware' => ['web']], function(){
@@ -37,12 +47,3 @@ Route::group(['prefix' => 'form', 'middleware' => ['web']], function()
 Route::get('/about', ['uses' => 'TestController@about']);
 Route::get('/{name}', ['uses' => 'TestController@hello']);
 
-
-Route::group(['namespace' => 'Admin'], function(){
-    Route::get('admin-panel', 'IndexController@index');
-});
-
-
-/*Route::group(['middleware' => ['web']], function () {
-    //
-});*/

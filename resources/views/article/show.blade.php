@@ -4,10 +4,14 @@
 
 
 @section('content')
-
     <div class="row">
         <div class="col-md-4">
             <h2>{{ $article->title }}</h2>
+            @if( ! $article->tags->isEmpty())
+                @foreach($article->tags as $tag)
+                    <a href="#" class="btn btn-warning btn-xs">{{ $tag->name }}</a>
+                @endforeach
+            @endif
             <hr>
 
             <div class="jumbotron">
@@ -15,7 +19,7 @@
             </div>
         </div>
         <div class="col-md-8">
-            <h2>Картнки</h2>
+            <h2>Картнки ({{ $article->photos->count()  }})</h2>
             <hr>
             @forelse($article->photos->chunk(3) as $photo)
                 <div class="row">

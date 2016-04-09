@@ -23,4 +23,14 @@ class Article extends Model
     {
         return $this->photos()->save($photo);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(\App\Tag::class);
+    }
+
+    public function getTagListAttribute()
+    {
+        return $this->tags()->lists('tag_id', 'tag_id')->all();
+    }
 }

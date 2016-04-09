@@ -13,20 +13,6 @@ class TestsSeeder extends Seeder
     {
         DB::table('tests')->truncate();
 
-        $records = [];
-        $faker = Faker\Factory::create();
-
-        for($i = 0; $i < 10000; $i++){
-            $records[] = [
-                'rip_date' => $faker->dateTimeBetween(),
-                'updated_at' => $faker->dateTimeBetween(),
-                'created_at' => $faker->dateTimeBetween(),
-                'name' => $faker->userName,
-                'email' => $faker->email,
-                'address' => $faker->address
-            ];
-        }
-
-        DB::table('tests')->insert($records);
+       factory(\App\Test::class, 100)->create();
     }
 }
